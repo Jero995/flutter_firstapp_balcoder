@@ -1,43 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firstapp_balcoder/ui/second_page.dart';
 
-
-class MyHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  String nombre = "Jero";
+class _HomePageState extends State<HomePage> {
+  String nombre = "Jerònimo";
   int count = 0;
-  bool isRed = true;
-  double decimal = 3.5;
-
-
+  double calificacion = 7.2;
+  bool vof = false;
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _widht = MediaQuery.of(context).size.width;
+
+    print(_height);
+    print(_widht);
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text(nombre + ", Hola", style: TextStyle(color: Colors.white),),
+      appBar: AppBar(
+        title: Center(child: Text("JPM Inc.")),
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            Center(
+                child: Text(
+              count.toString(),
+              style: TextStyle(color: Colors.green[800], fontSize: 24),
+            )),
+            GestureDetector(
+              onTap: () {
+                print("clic n");
+                setState(() {
+                  vof = !vof;
+                });
+              },
+              child: Container(
+                height: _height * 0.5,
+                width: _widht * 0.5,
+                color: vof
+                    ? Colors.red
+                    : count >= 2
+                        ? Colors.green
+                        : Colors.orange,
+              ),
+            ),
+            Row(children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return SecondPage();
+                  }));
+                },
+                child: Container(
+                  height: _height * 0.1,
+                  width: _widht * 0.1,
+                  color: Colors.purple,
+                ),
+              )
+            ])
+          ],
         ),
-        body: Container(
-        
-          child: Center(child: Text("Contador: "
-          +count.toString()+ " veces", 
-          style: TextStyle(fontSize: 57),),),
-          color: Colors.white,
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.upgrade),
-          onPressed: () {
-            setState(() {
-                          count = count+1;
-
-            });
-
-            print(count); 
-            print("Contador");
-          },
-        ));
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            count = count + 1;
+          });
+          print(count);
+        },
+        child: Icon(Icons.verified),
+      ),
+    );
   }
 }
